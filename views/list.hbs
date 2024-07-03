@@ -1,5 +1,5 @@
 <h1>{{title}}</h1>
-{{#each alunos.content}}
+{{!-- {{#each alunos.content}}
 
 <ul>
     <li><b>Nome</b>{{nome}}</li>
@@ -7,25 +7,26 @@
     <li><b>Data De Nascimento</b>{{data_nascimento}}</li>
     <li><b>Endereço de Email</b>{{email}}</li>
 </ul>
-{{/each}}
+{{/each}} --}}
 
 <table class="table">
     <thead>
         <tr>
-            <th scope="col">#</th>
-            <th scope="col">nome</th>
-            <th scope="col">matricula</th>
-            <th scope="col">data_nascimento</th>
-            <th scope="col">email</th>
+            <th scope="col">Nome</th>
+            <th scope="col">Matricula</th>
+            <th scope="col">Data de Nascimento</th>
+            <th scope="col">Email</th>
+            <th scope="col"></th>
         </tr>
     </thead>
     <tbody>
+        {{#each alunos.content}}
         <tr alunos.content>
-            <th scope="row">3</th>
-            <td{{Nome}}></td>
-            <td{{Matricula}}></td>
-            <td{{data_nascimento}}></td>
-            <td{{email}}></td>
+            <th><a href="/alunos/{{matricula}}">{{nome}}</a></th>
+            <th>{{matricula}}</th>
+            <th>{{data_nascimento}}</th>
+            <th>{{email}}</th>
         </tr>
+        {{/each}}
     </tbody>
-</table>
+</table> 
