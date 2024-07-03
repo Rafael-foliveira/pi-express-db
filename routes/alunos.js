@@ -17,4 +17,10 @@ router.get('/:matricula', function(req, res, next){
     res.render('card', {title: 'Detalhe do Aluno',aluno})
 
 });
+
+router.get('/new', function(req, res, next){
+    res.render('form', { title: 'Novo Aluno', buttonText: 'Adcionar'});
+
+})
+
 module.exports = router;
