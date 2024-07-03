@@ -10,6 +10,11 @@ router.get('/', function(req, res, next) {
         res.render('list',data)
 });
 
+router.get('/new', function(req, res, next){
+    res.render('form', { title: 'Novo Aluno', buttonText: 'Adcionar'});
+
+})
+
 router.get('/:matricula', function(req, res, next){
 
     const {matricula} = req.params;
@@ -18,9 +23,5 @@ router.get('/:matricula', function(req, res, next){
 
 });
 
-router.get('/new', function(req, res, next){
-    res.render('form', { title: 'Novo Aluno', buttonText: 'Adcionar'});
-
-})
 
 module.exports = router;
