@@ -6,7 +6,7 @@
     <li>{{aluno.email}}</li>
 </ul> --}}
 
-<table class="table">
+{{!-- <table class="table">
     <thead>
         <tr>
             <th scope="col">Nome</th>
@@ -24,4 +24,19 @@
             <th>{{aluno.email}}</th>
         </tr>
     </tbody>
-</table> 
+</table> --}}
+<div class="card" style="width: 18rem;">
+    <div class="card-body">
+        <h5 class="card-title">Dados do aluno</h5>
+    </div>
+    <ul class="list-group list-group-flush">
+        <li class="list-group-item">Nome: {{aluno.nome}}</li>
+        <li class="list-group-item">Matricula: {{aluno.matricula}}</li>
+        <li class="list-group-item">Data de Nascimento: {{aluno.data_nascimento}}</li>
+        <li class="list-group-item">Email: {{aluno.email}}</li>
+    </ul>
+    <div class="card-body">
+        <a href="/alunos/edit/{{aluno.matricula}}" class="btn btn-success" class="card-link" >editar</a>
+        <a href="" class="btn btn-warning" class="card-link">Another link</a>
+    </div>
+</div>

@@ -14,6 +14,14 @@ router.get('/new', function(req, res, next){
     res.render('form', { title: 'Novo Aluno', buttonText: 'Adcionar'});
 
 })
+router.post('/create', function(req, res, next){
+    const novoAluno = req.body;
+    const matricula = novoAluno.matricula;
+    
+    alunos.content[matricula]= novoAluno
+    
+    res.send(alunos);
+});
 
 router.get('/:matricula', function(req, res, next){
 
@@ -26,9 +34,8 @@ router.get('/:matricula', function(req, res, next){
 router.get('/edit/:matricula', function(req, res, next){
     const {matricula} = req.params;
     const aluno = alunos.content[matricula]
-    res.render('form', { title: 'Editar Aluno', buttonText:'Salvar,Alterações', aluno});
+    res.render('form', { title: 'Editar Aluno', buttonText:'Salvar Alterações', aluno});
 
 })
-
 
 module.exports = router;

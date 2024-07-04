@@ -1,18 +1,19 @@
-<form action="">
+<form action="/alunos/create" method="POST">
     <div class="mb-3">
         <label class="form-label">Nome</label>
-        <input type="text" class="form-control" value="{{aluno.nome}}">
+        <input type="text" name="nome" class="form-control" value="{{aluno.nome}}" placeholder="Nome do Aluno">
     </div>
     <div class="mb-3">
-        <label class="form-label">matricula</label>
-        <input type="text" class="form-control" value="{{aluno.matricula}}">
+        <label  class="form-label">matricula</label>
+        <input type="number" name="matricula" class="form-control" value="{{aluno.matricula}}" placeholder="Matricula Do Aluno">
     </div>
     <div class="mb-3">
         <label class="form-label">Data de nascimento</label>
-        <input type="text" class="form-control" value="{{aluno.data_nascimento}}">
+        <input type="date" name="data_nascimento" class="form-control" value="{{aluno.data_nascimento}}">
     </div>
     <div class="mb-3">
         <label class="form-label">Endereço Email</label>
-        <input type="text" class="form-control" value="{{aluno.email}}">
+        <input type="email" name="email" class="form-control" value="{{aluno.email}}" placeholder="Endereço Email">
     </div>
+    <input type="submit" class="btn btn-success" name="submit" id="submit" value="{{buttonText}}">
 </form>

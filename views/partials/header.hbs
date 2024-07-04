@@ -1,19 +1,25 @@
 <!DOCTYPE html>
 <html>
-<nav class="navbar navbar-expand-lg navbar-light bg-light">
+<nav class="navbar-expand-lg bg-dark">
     <div class="container-fluid">
-        <button type="button" class="btn btn-primary">
-            <a class="navbar-brand" href="#">Inicio</a>
+        <a class="navbar-brand" href="/">Inicio</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="true" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
         </button>
-        <div class="collapse navbar-collapse" id="navbarNav">
-            <ul class="navbar-nav">
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                 <li class="nav-item">
-                    <button type="button" class="btn btn-secondary">
-                        <a class="navbar-brand" aria-current="page" href="/alunos">Alunos</a>
-                    </button>
-
+                    <a class="nav-link active" aria-current="page" href="/alunos">Aluno</a>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
+                        aria-expanded="false">
+                    </a>
+                </li>
             </ul>
+            <form class="d-flex" role="search">
+            </form>
         </div>
     </div>
 </nav>
-
