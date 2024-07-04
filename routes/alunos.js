@@ -18,9 +18,12 @@ router.post('/create', function(req, res, next){
     const novoAluno = req.body;
     const matricula = novoAluno.matricula;
     
-    alunos.content[matricula]= novoAluno
-    
-    res.send(alunos);
+    alunos.content[matricula]= {
+        ...novoAluno,
+        matricula: Number(matricula)
+
+    }
+    res.redirect("/alunos");
 });
 
 router.get('/:matricula', function(req, res, next){
