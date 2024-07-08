@@ -1,14 +1,4 @@
 <h1>{{title}}</h1>
-{{!-- {{#each alunos.content}}
-
-<ul>
-    <li><b>Nome</b>{{nome}}</li>
-    <li><b>Matricula</b>{{matricula}}</li>
-    <li><b>Data De Nascimento</b>{{data_nascimento}}</li>
-    <li><b>Endereço de Email</b>{{email}}</li>
-</ul>
-{{/each}} --}}
-
 <table class="table">
     <thead>
         <tr>
@@ -23,14 +13,14 @@
     <tbody>
         {{#each alunos.content}}
         <tr alunos.content>
-            <th><a href="/alunos/{{matricula}}">{{nome}}</a></th>
+            <th><a class="btn btn-success" href="/alunos/{{matricula}}">{{nome}}</a></th>
             <th>{{matricula}}</th>
             <th>{{data_nascimento}}</th>
             <th>{{email}}</th>
-            <td><a href="/alunos/edit/{{matricula}}">editar</a></td>
+            <td><a class="btn btn-info" href="/alunos/edit/{{matricula}}">editar</a></td>
         </tr>
         {{/each}}
     </tbody>
 </table> 
 
-<a href="/alunos/new">Adcionar Novo Aluno</a>
+<a class="btn btn-info" href="/alunos/new">Adcionar Novo Aluno</a>
