@@ -55,9 +55,11 @@ router.put('/:matricula', function (req, res, next) {
     }
     res.redirect('/alunos');
 });
-router.delete('/', function (req, res, next) {
-    const {body, method} = req
-    res.send({body,method ,msg:'remover aluno'});
+router.delete('/:matricula', function (req, res, next) {
+    const matricula = req.params.matricula
+
+    delete alunos.content[matricula]
+    res.redirect(303,'/alunos');
 });
 
 
