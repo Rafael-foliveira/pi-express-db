@@ -1,7 +1,7 @@
 <h1>{{title}}</h1>
 
-<form action="/alunos" method="POST">
-<input type="hidden" name="_method" value="DELETE">
+<form action="/alunos/{{parametro}}" method="POST">
+<input type="hidden" name="_method" value="{{metodo}}">
 
     <div class="mb-3">
         <label class="form-label">Nome</label>
