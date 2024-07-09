@@ -1,57 +1,62 @@
-var createError = require('http-errors');
-var express = require('express');
-var path = require('path');
-var cookieParser = require('cookie-parser');
-var logger = require('morgan');
-var bodyParser = require('body-parser');
+var createError = require("http-errors");
+var express = require("express");
+var path = require("path");
+var cookieParser = require("cookie-parser");
+var logger = require("morgan");
+var bodyParser = require("body-parser");
+var cors = require("cors");
 
+var indexRouter = require("./routes/index");
+var alunosRouter = require("./routes/alunos");
+var usersRouter = require("./routes/users");
 
-var indexRouter = require('./routes/index');
-var usersRouter = require('./routes/users');
-var alunosRouter = require('./routes/alunos');
-var apialunosRouter = require('./routes/api/apialunos') 
+var apiAlunosRouter = require("./routes/api/apialunos");
 
-var httpoverrideHttpMethod = require('./middleware/http-method-override')
-
+var httpMethodOverrider = require("./middleware/http-method-override");
 
 var app = express();
+
+// Use CORS middleware
+app.use(cors());
+
+// https://github.com/expressjs/method-override?tab=readme-ov-file#custom-logic
 app.use(bodyParser.urlencoded());
 
-app.use(httpoverrideHttpMethod)
+// Custom Middlewares
+app.use(httpMethodOverrider); // TODO: Criar testes para este middleware
 
-var { create } = require('express-handlebars');
-var hbs =  create({ extname: '.hbs' })
+// View engine Setup
+// https://github.com/ericf/express-handlebars?tab=readme-ov-file#extnamehandlebars
+var hbs = require("./config/config_handlebars");
+app.engine("hbs", hbs.engine);
+app.set("views", "./views");
+app.set("view engine", "hbs");
 
-// view engine setup
-app.engine('.hbs', hbs.engine);
-app.set('views', './views');
-app.set('view engine', '.hbs');
-
-app.use(logger('dev'));
+app.use(logger("dev"));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
-app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.static(path.join(__dirname, "public")));
 
-app.use('/', indexRouter);
-app.use('/users', usersRouter);
-app.use('/alunos', alunosRouter);
-app.use('/api/v1/alunos', apialunosRouter);
+app.use("/", indexRouter);
+app.use("/users", usersRouter);
+app.use("/alunos", alunosRouter);
+app.use("/api/v1/alunos", apiAlunosRouter);
 
 // catch 404 and forward to error handler
-app.use(function(req, res, next) {
+app.use(function (req, res, next) {
   next(createError(404));
 });
 
 // error handler
-app.use(function(err, req, res, next) {
+app.use(function (err, req, res, next) {
   // set locals, only providing error in development
   res.locals.message = err.message;
-  res.locals.error = req.app.get('env') === 'development' ? err : {};
+  res.locals.error = req.app.get("env") === "development" ? err : {};
 
   // render the error page
   res.status(err.status || 500);
-  res.render('error');
+  res.render("error");
 });
 
 module.exports = app;

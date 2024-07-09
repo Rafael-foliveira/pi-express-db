@@ -3,13 +3,13 @@ var router = express.Router();
 var alunos = require('../../tests/mocks/alunos.json')
 
 router.get('/', function(req, res, next) {
-    const data = {
-        title: 'Alunos',
-        alunos: alunos
-    };
-        res.json(data)
+    try {
+        res.status(200).json(alunos);
+        
+    } catch (error) {
+        res.status(400).json({ msg: error.message });
+    }
 });
-
 
 router.get('/:matricula', function(req, res, next){
     const {matricula} = req.params;
