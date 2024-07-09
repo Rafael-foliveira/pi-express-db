@@ -13,40 +13,56 @@ router.get('/', function(req, res, next) {
 
 router.get('/:matricula', function(req, res, next){
     const {matricula} = req.params;
-    const aluno = alunos.content[matricula]
-    res.json({aluno})
-
+    try {
+        const aluno = alunos.content[matricula]
+        res.status(200).json(aluno);
+    } catch (error) {
+        res.status(400).json({ msg: error.message });
+        
+    }
 });
 
 
 router.post('/', function(req, res, next){
     const novoAluno = req.body;
-    const matricula = novoAluno.matricula;
-    alunos.content[matricula]= {
-        ...novoAluno,
-        matricula: Number(matricula)
-
-    }
+    
     res.redirect("/alunos");
+    try {
+        const matricula = novoAluno.matricula;
+        res.status(201).json(aluno.content[matricula])
+        alunos.content[matricula]= {
+            ...novoAluno,
+            matricula: Number(matricula),
+        }
+    } catch (error) {
+        res.status(400).json({ msg: error.message });
+    }
 });
 
 router.put('/:matricula', function (req, res, next) {
-    // const {body, method} = req
     const novoAluno = req.body;
-    const matricula = novoAluno.matricula;
-    alunos.content[matricula]= {
-        ...novoAluno,
-        matricula: Number(matricula)
-
+    res.redirect("/alunos");
+    try {
+        const matricula = req.params.matricula
+        res.status(200).json(matricula)
+        alunos.content[matricula]= {
+            ...novoAluno,
+            matricula: Number(matricula),
+        }
+    } catch (error) {
+        res.status(400).json({ msg: error.message });
     }
-    res.redirect('/alunos');
 });
 
 router.delete('/:matricula', function (req, res, next) {
-    const matricula = req.params.matricula
-
-    delete alunos.content[matricula]
-    res.redirect(303,'/alunos');
+    const matricula = req.params.matricula        
+    try {
+        delete alunos.content[matricula]
+        res.status(200).json(matricula)
+    } catch (error) {
+        res.status(400).json({ msg: error.message });
+    }
+    // res.redirect(303,'/alunos');
 });
 
 

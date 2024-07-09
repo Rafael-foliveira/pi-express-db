@@ -21,14 +21,9 @@ router.get('/new', function(req, res, next){
 })
 
 router.get('/:matricula', function(req, res, next){
-    try {
-        const {matricula} = req.params;
-        const aluno = alunos.content[matricula]
-        res.status((200),'card', {title: 'Detalhe do Aluno',aluno})
-        
-    } catch (error) {
-        
-    }
+    const {matricula} = req.params;
+    const aluno = alunos.content[matricula]
+    res.render('card', {title: 'Detalhe do Aluno',aluno})
 
 });
 
