@@ -42,19 +42,21 @@ router.get('/:matricula',async function(req, res, next){
 });
 
 
-router.post('/', function(req, res, next){
+router.post('/', async function (req, res, next) {
     const novoAluno = req.body;
-    const query =    
-    `INSERT
-    INTO  alunos (matricula, nome, email, data_nascimento)
-    VALUES ($1, $2 ,$3, $4)`
+    const quary = `
+        INSERT
+        INTO alunos (matricula, nome, email, data_nascimento)
+        VALUES ($1, $2, $3, $4)
+`;
+    const nome = req.body.nome
+    const matricula = req.body.matricula
+    const email = req.body.email
+    const data_nascimento = req.body.data_nascimento
+    const values = [matricula, nome, email, data_nascimento];
     try {
-        const matricula = novoAluno.matricula;
-        res.status(201).json(aluno.content[matricula])
-        alunos.content[matricula]= {
-            ...novoAluno,
-            matricula: Number(matricula),
-        }
+        const data = await db.any(quary, values)
+        res.status(200).json(data)
     } catch (error) {
         res.status(400).json({ msg: error.message });
     }
@@ -87,7 +89,7 @@ DELETE FROM alunos WHERE matricula
     } catch (error) {
         res.status(400).json({ msg: error.message });
     }
-    // res.redirect(303,'/alunos');
+
 });
 
 
