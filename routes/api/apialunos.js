@@ -14,7 +14,6 @@ router.get('/',async function (_req, res, next) {
     }
 });
 
-
 router.get('/', function(req, res, next) {
     try {
         res.status(200).json(alunos);
@@ -41,10 +40,9 @@ router.get('/:matricula',async function(req, res, next){
     }
 });
 
-
 router.post('/', async function (req, res, next) {
     const novoAluno = req.body;
-    const quary = `
+    const query = `
         INSERT
         INTO alunos (matricula, nome, email, data_nascimento)
         VALUES ($1, $2, $3, $4)
@@ -55,23 +53,28 @@ router.post('/', async function (req, res, next) {
     const data_nascimento = req.body.data_nascimento
     const values = [matricula, nome, email, data_nascimento];
     try {
-        const data = await db.any(quary, values)
+        const data = await db.any(query, values)
         res.status(200).json(data)
     } catch (error) {
         res.status(400).json({ msg: error.message });
     }
 });
 
-router.put('/:matricula', function (req, res, next) {
+router.put('/:matricula',async function (req, res, next) {
     const novoAluno = req.body;
-    res.redirect("/alunos");
+    const query = `
+        UPDATE alunos
+        SET nome=$2, email=$3, data_nascimento=$4
+        WHERE matricula=$1
+`;
+    const nome = req.body.nome
+    const matricula = req.body.matricula
+    const email = req.body.email
+    const data_nascimento = req.body.data_nascimento
+    const values = [matricula, nome, email, data_nascimento];
     try {
-        const matricula = req.params.matricula
-        res.status(200).json(matricula)
-        alunos.content[matricula]= {
-            ...novoAluno,
-            matricula: Number(matricula),
-        }
+        const data = await db.any(query, values)
+        res.status(200).json(data)
     } catch (error) {
         res.status(400).json({ msg: error.message });
     }
@@ -80,11 +83,10 @@ router.put('/:matricula', function (req, res, next) {
 router.delete('/:matricula',async function (req, res, next) {
     const matricula = req.params.matricula        
     const query = `
-DELETE FROM alunos WHERE matricula 
+DELETE FROM alunos WHERE matricula = $1
 `
     try {
-        const data = await db.any(query);
-        delete alunos.content[matricula]
+        const data = await db.any(query,matricula);
         res.status(200).json(matricula)
     } catch (error) {
         res.status(400).json({ msg: error.message });
