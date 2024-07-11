@@ -14,26 +14,17 @@ router.get('/',async function (_req, res, next) {
     }
 });
 
-router.get('/', function(req, res, next) {
-    try {
-        res.status(200).json(alunos);
-        
-    } catch (error) {
-        res.status(400).json({ msg: error.message });
-    }
-});
-
 router.get('/:matricula',async function(req, res, next){
-    const {matricula} = req.params;
+    const matricula = req.params;
     const query = `
             SELECT *
             FROM alunos 
-            WHERE matricula 
+            WHERE matricula = $1
     `
     try {
-        const data = await db.any(query);
-        const aluno = alunos.content[matricula]
-        res.status(200).json(aluno);
+        const data = await db.any(query, matricula);
+        res.status(200).json(data);
+
     } catch (error) {
         res.status(400).json({ msg: error.message });
         
