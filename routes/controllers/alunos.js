@@ -1,6 +1,6 @@
 
 var express = require('express');
-const { localApi } = require('../config/config_axios')
+const { localApi } = require('../../config/config_axios')
 var router = express.Router();
 // var alunos = require('../tests/mocks/alunos.json')
 
@@ -26,7 +26,6 @@ router.get('/:matricula',async function(req, res, next){
 
     try {
         let resposta = await localApi.get('/api/v1/alunos/' + matricula);
-        console.log(resposta);
         let aluno = resposta.data
         let viewData = {aluno, title: "Detalhes do aluno"}
 
@@ -40,34 +39,32 @@ router.get('/:matricula',async function(req, res, next){
 });
 
 router.get('/edit/:matricula', async function(req,res,next){
-    let matricula = req.params.matricula
-    let apiurlpatch = '/api/v1/alunos/' + matricula
-    let viewData = {
-        method: "PUT",
-        parametro: matricula,
-        title: "Editar Aluno",
-        buttonText:"Adicionar"
-    }
+    const {matricula} = req.params
+    const apiUrlcath = '/api/v1/alunos/'+ matricula
+    let viewData={method: "PUT",parametro: matricula, title: 'Editar Aluno', buttonText:'Salvar, alterações'}
     try {
-        const resposta = await localApi.get(apiurlpatch)
-        let aluno = resposta.data
-        viewData.aluno = aluno
+        let resposta= await localApi.get(apiUrlcath)
+        let aluno=resposta.data
+        viewData.aluno=aluno
         res.status(200).render('form',viewData)
     } catch (error) {
-        res.status(400).json({msg: error.messagem})
+        res.json({msg: error.message})
     }
+
 })
 
-router.post('/create', function(req, res, next){
-    const novoAluno = req.body;
-    
-    const matricula = novoAluno.matricula;
-    alunos.content[matricula]= {
-        ...novoAluno,
-        matricula: Number(matricula)
+router.post('/create',async function(req, res, next){
+    let apiUrlPath = '/api/v1/alunos' 
 
+    const data = req.body
+    
+    try {
+        const response = await localApi.post(apiUrlPath, data);
+        res.redirect('/alunos')
+    } catch (error) {
+        console.error(error.message)
     }
-    res.redirect("/alunos");
+
 });
 
 router.put('/:matricula',async function (req, res, next) {
@@ -84,11 +81,17 @@ router.put('/:matricula',async function (req, res, next) {
     }
 
 });
-router.delete('/:matricula', function (req, res, next) {
+router.delete('/:matricula',async function (req, res, next) {
     const matricula = req.params.matricula
 
-    delete alunos.content[matricula]
-    res.redirect(303,'/alunos');
+    try {
+        await localApi.delete('/api/v1/alunos/' + matricula);
+        res.status(200).render('card');
+    } catch (error) {
+        res.json({ msg: error.message });
+    }finally {
+        res.redirect(303, '/alunos')
+    }
 });
 
 
